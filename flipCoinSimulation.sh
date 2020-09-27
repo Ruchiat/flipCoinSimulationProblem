@@ -65,6 +65,7 @@ do
 done
 
 #Who won and by how much 
+
 if [ $timesHeadsGotGenerated -gt $timesTailsGotGenerated ]
 then 
 	headsWonByPoints=$((timesHeadsGotGenerated-timesTailsGotGenerated));
@@ -72,4 +73,31 @@ then
 else
 	tailsWonByPoints=$((timesTailsGotGenerated-timesHeadsGotGenerated));
 	echo "Tails Won By "$tailsWonByPoints" points !";
+fi
+
+
+#if its tie then the game continues till the difference of minimum 2 points is achieved
+
+
+
+if [ $timesHeadsGotGenerated -eq $timesTailsGotGenerated ]
+then
+	echo "ITS a Tie !!!";
+	difference=0;
+	while [ $difference -lt 3 ]
+	do
+			val=$( generateRandomValue $((RANDOM%2)) );
+			if [ $val == 1 ]
+			then
+				heads=$((heads+1));
+			else
+				tails=$((tails+1));
+			fi
+	    if [ $heads -gt $tails ]
+	    then
+		difference=$((heads-tails));
+            else
+		difference=$((tails-heads));
+	    fi
+	done
 fi
